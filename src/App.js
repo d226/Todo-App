@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
 
 const initialTasks = [];
 
@@ -112,12 +115,12 @@ function App() {
       const newTask = {
         id: (Math.random() * 100).toString(),
         content: newTaskContent,
-        description: newTaskDescription, // Use the description from the state
+        description: newTaskDescription,
       };
       updatedColumns.requested.items.push(newTask);
       setColumns(updatedColumns);
       setNewTaskContent("");
-      setNewTaskDescription(""); // Clear the description input field
+      setNewTaskDescription("");
     }
   };
 
@@ -125,21 +128,44 @@ function App() {
     <div
       style={{ backgroundColor: "#000000", color: "white", height: "100vh" }}
     >
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <input
+      <Box
+        sx={{
+          bgcolor: "#222327",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "baseline",
+        }}
+      >
+        <TextField
+          variant="outlined"
           type="text"
           placeholder="Add a new task"
           value={newTaskContent}
           onChange={(e) => setNewTaskContent(e.target.value)}
+          sx={{ color: "white", m: 5, bgcolor: "white", borderRadius: "10px" }}
         />
-        <input
+        <TextField
+          variant="outlined"
           type="text"
           placeholder="Add task description"
           value={newTaskDescription}
           onChange={(e) => setNewTaskDescription(e.target.value)}
+          sx={{ color: "white", m: 5, bgcolor: "white", borderRadius: "10px" }}
         />
-        <button onClick={addNewTask}>Add Task</button>
-      </div>
+        <Button
+          variant="outlined"
+          onClick={addNewTask}
+          sx={{
+            color: "#FAFAFA",
+            fontWeight: "bold",
+            fontSize: 12,
+            m: 5,
+          }}
+        >
+          Add Task
+        </Button>
+      </Box>
+
       <div
         style={{ display: "flex", justifyContent: "center", height: "100%" }}
       >
@@ -153,7 +179,6 @@ function App() {
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
-                  // backgroundColor: "#222327",
                 }}
                 key={columnId}
               >
@@ -167,9 +192,10 @@ function App() {
                           {...provided.droppableProps}
                           ref={provided.innerRef}
                           style={{
-                            background: snapshot.isDraggingOver
-                              ? "lightblue"
-                              : "lightgrey",
+                            // background: snapshot.isDraggingOver
+                            //   ? "lightblue"
+                            //   : "lightgrey",
+                            backgroundColor: "#222327",
                             padding: 4,
                             width: 350,
                             minHeight: 500,
@@ -193,17 +219,20 @@ function App() {
                                         padding: 16,
                                         margin: "0 0 8px 0",
                                         minHeight: "50px",
-                                        backgroundColor: snapshot.isDragging
-                                          ? "#263B4A"
-                                          : "#456C86",
+                                        // backgroundColor: snapshot.isDragging
+                                        //   ? "#263B4A"
+                                        //   : "#456C86",
+                                        backgroundColor:
+                                          "rgba(255, 255, 255,0.2)",
                                         color: "white",
                                         ...provided.draggableProps.style,
                                       }}
                                     >
                                       {editingTask === item.id ? (
                                         <div>
-                                          <input
-                                            type="text"
+                                          <TextField
+                                            variant="outlined"
+                                            size="small"
                                             value={editedTaskData.content}
                                             onChange={(e) => {
                                               setEditedTaskData({
@@ -211,9 +240,11 @@ function App() {
                                                 content: e.target.value,
                                               });
                                             }}
+                                            sx={{ bgcolor: "white", m: 1 }}
                                           />
-                                          <input
-                                            type="text"
+                                          <TextField
+                                            variant="outlined"
+                                            size="small"
                                             value={editedTaskData.description}
                                             onChange={(e) => {
                                               setEditedTaskData({
@@ -221,23 +252,42 @@ function App() {
                                                 description: e.target.value,
                                               });
                                             }}
+                                            sx={{ bgcolor: "white", m: 1 }}
                                           />
-                                          <button onClick={cancelEditingData}>
+                                          <br />
+                                          <Button
+                                            variant="text"
+                                            onClick={cancelEditingData}
+                                            sx={{
+                                              color: "#FAFAFA",
+                                              fontWeight: "bold",
+                                              fontSize: 12,
+                                              m: 1,
+                                            }}
+                                          >
                                             Cancel
-                                          </button>
-                                          <button
+                                          </Button>
+                                          <Button
+                                            variant="text"
                                             onClick={() => {
                                               saveEditedTaskData(columnId);
                                             }}
+                                            sx={{
+                                              color: "#FAFAFA",
+                                              fontWeight: "bold",
+                                              fontSize: 12,
+                                              m: 1,
+                                            }}
                                           >
                                             Save
-                                          </button>
+                                          </Button>
                                         </div>
                                       ) : (
                                         <div>
                                           <div>
                                             {item.content}
-                                            <button
+                                            <Button
+                                              variant="text"
                                               onClick={() => {
                                                 startEditingTask(
                                                   item.id,
@@ -245,20 +295,33 @@ function App() {
                                                   item.description
                                                 );
                                               }}
+                                              sx={{
+                                                color: "#FAFAFA",
+                                                fontWeight: "bold",
+                                                fontSize: 12,
+                                                m: 1,
+                                              }}
                                             >
                                               Edit
-                                            </button>
+                                            </Button>
                                           </div>
                                           <div>{item.description}</div>
                                         </div>
                                       )}
-                                      <button
+                                      <Button
+                                        variant="text"
                                         onClick={() => {
                                           deleteTask(columnId, item.id);
                                         }}
+                                        sx={{
+                                          color: "#FAFAFA",
+                                          fontWeight: "bold",
+                                          fontSize: 12,
+                                          m: 1,
+                                        }}
                                       >
                                         Delete
-                                      </button>
+                                      </Button>
                                     </div>
                                   );
                                 }}
