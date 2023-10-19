@@ -3,6 +3,7 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
+import { Typography } from "@mui/material";
 
 const initialTasks = [];
 
@@ -126,7 +127,11 @@ function App() {
 
   return (
     <div
-      style={{ backgroundColor: "#000000", color: "white", height: "100vh" }}
+      style={{
+        backgroundColor: "#000000",
+        color: "white",
+        height: "100vh",
+      }}
     >
       <Box
         sx={{
@@ -196,7 +201,7 @@ function App() {
                             //   ? "lightblue"
                             //   : "lightgrey",
                             backgroundColor: "#222327",
-                            padding: 4,
+                            padding: 15,
                             width: 350,
                             minHeight: 500,
                           }}
@@ -219,9 +224,7 @@ function App() {
                                         padding: 16,
                                         margin: "0 0 8px 0",
                                         minHeight: "50px",
-                                        // backgroundColor: snapshot.isDragging
-                                        //   ? "#263B4A"
-                                        //   : "#456C86",
+
                                         backgroundColor:
                                           "rgba(255, 255, 255,0.2)",
                                         color: "white",
@@ -285,7 +288,11 @@ function App() {
                                       ) : (
                                         <div>
                                           <div>
-                                            {item.content}
+                                            <Typography
+                                              sx={{ wordWrap: "break-word" }}
+                                            >
+                                              {item.content}
+                                            </Typography>
                                             <Button
                                               variant="text"
                                               onClick={() => {
@@ -305,7 +312,14 @@ function App() {
                                               Edit
                                             </Button>
                                           </div>
-                                          <div>{item.description}</div>
+                                          <div>
+                                            {" "}
+                                            <Typography
+                                              sx={{ wordWrap: "break-word" }}
+                                            >
+                                              {item.description}
+                                            </Typography>
+                                          </div>
                                         </div>
                                       )}
                                       <Button
