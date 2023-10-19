@@ -3,7 +3,7 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
-import { Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 
 const initialTasks = [];
 
@@ -197,9 +197,6 @@ function App() {
                           {...provided.droppableProps}
                           ref={provided.innerRef}
                           style={{
-                            // background: snapshot.isDraggingOver
-                            //   ? "lightblue"
-                            //   : "lightgrey",
                             backgroundColor: "#222327",
                             padding: 15,
                             width: 350,
@@ -232,67 +229,142 @@ function App() {
                                       }}
                                     >
                                       {editingTask === item.id ? (
-                                        <div>
-                                          <TextField
-                                            variant="outlined"
-                                            size="small"
-                                            value={editedTaskData.content}
-                                            onChange={(e) => {
-                                              setEditedTaskData({
-                                                ...editedTaskData,
-                                                content: e.target.value,
-                                              });
-                                            }}
-                                            sx={{ bgcolor: "white", m: 1 }}
-                                          />
-                                          <TextField
-                                            variant="outlined"
-                                            size="small"
-                                            value={editedTaskData.description}
-                                            onChange={(e) => {
-                                              setEditedTaskData({
-                                                ...editedTaskData,
-                                                description: e.target.value,
-                                              });
-                                            }}
-                                            sx={{ bgcolor: "white", m: 1 }}
-                                          />
-                                          <br />
-                                          <Button
-                                            variant="text"
-                                            onClick={cancelEditingData}
-                                            sx={{
-                                              color: "#FAFAFA",
-                                              fontWeight: "bold",
-                                              fontSize: 12,
-                                              m: 1,
-                                            }}
-                                          >
-                                            Cancel
-                                          </Button>
-                                          <Button
-                                            variant="text"
-                                            onClick={() => {
-                                              saveEditedTaskData(columnId);
-                                            }}
-                                            sx={{
-                                              color: "#FAFAFA",
-                                              fontWeight: "bold",
-                                              fontSize: 12,
-                                              m: 1,
-                                            }}
-                                          >
-                                            Save
-                                          </Button>
-                                        </div>
+                                        <Box>
+                                          <Stack alignItems="flex-start">
+                                            <Typography
+                                              sx={{
+                                                fontWeight: "bold",
+                                                fontSize: "16px",
+                                              }}
+                                            >
+                                              Title:{" "}
+                                            </Typography>
+                                            <div>
+                                              <TextField
+                                                variant="outlined"
+                                                size="small"
+                                                value={editedTaskData.content}
+                                                onChange={(e) => {
+                                                  setEditedTaskData({
+                                                    ...editedTaskData,
+                                                    content: e.target.value,
+                                                  });
+                                                }}
+                                                sx={{ bgcolor: "white", my: 1 }}
+                                              />
+                                            </div>
+
+                                            <Typography
+                                              sx={{
+                                                fontWeight: "bold",
+                                                fontSize: "16px",
+                                              }}
+                                            >
+                                              Description:{" "}
+                                            </Typography>
+                                            <div>
+                                              <TextField
+                                                variant="outlined"
+                                                size="small"
+                                                value={
+                                                  editedTaskData.description
+                                                }
+                                                onChange={(e) => {
+                                                  setEditedTaskData({
+                                                    ...editedTaskData,
+                                                    description: e.target.value,
+                                                  });
+                                                }}
+                                                sx={{ bgcolor: "white", my: 1 }}
+                                              />
+                                            </div>
+
+                                            <div>
+                                              <Button
+                                                variant="text"
+                                                onClick={cancelEditingData}
+                                                sx={{
+                                                  color: "#FAFAFA",
+                                                  fontWeight: "bold",
+                                                  fontSize: 12,
+                                                  m: 1,
+                                                }}
+                                              >
+                                                Cancel
+                                              </Button>
+                                              <Button
+                                                variant="text"
+                                                onClick={() => {
+                                                  saveEditedTaskData(columnId);
+                                                }}
+                                                sx={{
+                                                  color: "#FAFAFA",
+                                                  fontWeight: "bold",
+                                                  fontSize: 12,
+                                                  m: 1,
+                                                }}
+                                              >
+                                                Save
+                                              </Button>
+                                            </div>
+                                          </Stack>
+                                        </Box>
                                       ) : (
                                         <div>
-                                          <div>
+                                          <Box
+                                            sx={{
+                                              display: "flex",
+                                              direction: "column",
+                                            }}
+                                          >
                                             <Typography
-                                              sx={{ wordWrap: "break-word" }}
+                                              sx={{
+                                                wordWrap: "break-word",
+                                                m: 1,
+                                              }}
                                             >
+                                              <Typography
+                                                sx={{
+                                                  fontWeight: "bold",
+                                                  fontSize: "16px",
+                                                }}
+                                              >
+                                                Title:{" "}
+                                              </Typography>
                                               {item.content}
                                             </Typography>
+                                          </Box>
+                                          <div>
+                                            <Typography
+                                              sx={{
+                                                wordWrap: "break-word",
+                                                m: 1,
+                                              }}
+                                            >
+                                              <Typography
+                                                sx={{
+                                                  fontWeight: "bold",
+                                                  fontSize: "16px",
+                                                }}
+                                              >
+                                                Description:{" "}
+                                              </Typography>
+                                              {item.description}
+                                            </Typography>
+                                            <Button
+                                              variant="text"
+                                              onClick={() => {
+                                                deleteTask(columnId, item.id);
+                                              }}
+                                              sx={{
+                                                color: "#FAFAFA",
+                                                fontWeight: "bold",
+                                                fontSize: 12,
+                                                m: 1,
+                                              }}
+                                            >
+                                              Delete
+                                            </Button>
                                             <Button
                                               variant="text"
                                               onClick={() => {
@@ -312,30 +384,8 @@ function App() {
                                               Edit
                                             </Button>
                                           </div>
-                                          <div>
-                                            {" "}
-                                            <Typography
-                                              sx={{ wordWrap: "break-word" }}
-                                            >
-                                              {item.description}
-                                            </Typography>
-                                          </div>
                                         </div>
                                       )}
-                                      <Button
-                                        variant="text"
-                                        onClick={() => {
-                                          deleteTask(columnId, item.id);
-                                        }}
-                                        sx={{
-                                          color: "#FAFAFA",
-                                          fontWeight: "bold",
-                                          fontSize: 12,
-                                          m: 1,
-                                        }}
-                                      >
-                                        Delete
-                                      </Button>
                                     </div>
                                   );
                                 }}
